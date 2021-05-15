@@ -238,7 +238,7 @@ void cwiczenie_1_5_1() {
 
 #pragma omp parallel num_threads(omp_get_num_procs())
     {
-#pragma omp parallel
+#pragma omp for schedule(static,50)
         for (int i = 0; i < MAX; i++) {
             usleep(1); //Suspend execution for microsecond intervals
         }
