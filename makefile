@@ -1,0 +1,1 @@
+lab09: lab09.h lab09.cpp main.cpp ; g++ -o program09 lab09.cpp main.cpp -fopenmp -lgomp ; ./program09
