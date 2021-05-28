@@ -1,4 +1,4 @@
-#include "../PRiR/kolory.h"
+#include "kolory.h"
 
 unsigned short Kolor::licznik = 0;
 std::mutex Kolor::mtx;
