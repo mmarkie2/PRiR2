@@ -3,7 +3,7 @@
 #include <iostream>
 #include <thread>
 #include "kolory.h"
-
+#include "omp.h"
 #include <iomanip>
 
 
@@ -55,11 +55,21 @@ void l3z1() {
 
     wyswietlTablice(TAB, rozmiarTablicy);
 
-    thread watek1(sumujOdDo, TAB, 0, polowa, ref(wynik1));
-    thread watek2(sumujOdDo, TAB, polowa, rozmiarTablicy, ref(wynik2));
+    omp_set_num_threads(2);
+    string k = Kolor::nastepny(), r = Kolor::reset();
+#pragma omp parallel
+    {
 
-    watek1.join();
-    watek2.join();
+        int wynik = 0;
+#pragma omp for
+        for (int i = 0; i < rozmiarTablicy; i++) {
+            wynik += TAB[i];
+
+            string info = k + to_string(TAB[i]) + r + "\n";
+            cout << info;
+    };
+
+    }
 
 
     cout << endl << "Wyniki pracy wątków" << endl
