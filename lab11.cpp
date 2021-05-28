@@ -54,27 +54,27 @@ void l3z1() {
     wypelnijLosowymi(TAB, rozmiarTablicy);
 
     wyswietlTablice(TAB, rozmiarTablicy);
-
+    unsigned int polowa = rozmiarTablicy /2;
     omp_set_num_threads(2);
     string k = Kolor::nastepny(), r = Kolor::reset();
+    int wynik = 0;
 #pragma omp parallel
     {
 
-        int wynik = 0;
-#pragma omp for
+        int wynikW = 0;
+#pragma omp for schedule(dynamic,polowa)
         for (int i = 0; i < rozmiarTablicy; i++) {
-            wynik += TAB[i];
+            wynikW += TAB[i];
 
             string info = k + to_string(TAB[i]) + r + "\n";
             cout << info;
     };
-
+        cout << "suma watku "+ std::to_string(wynikW)+"\n";
+        wynik+=wynikW;
     }
 
+    cout << "suma  "+ std::to_string(wynik)+"\n";
 
-    cout << endl << "Wyniki pracy wątków" << endl
-         << "suma1=" << wynik1 << " suma2=" << wynik2
-         << " suma=" << wynik1 + wynik2 << endl << endl;
 
     delete[] TAB;
 }
